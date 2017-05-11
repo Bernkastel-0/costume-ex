@@ -71,7 +71,7 @@ function presetSave() {
 				event.characters[index].weaponSkin = presets[event.characters[index].name].weaponSkin;
 				event.characters[index].weaponEnchant = presets[event.characters[index].name].weaponEnchant;
 				event.characters[index].costume = presets[event.characters[index].name].costume;
-				event.characters[index].costumeDye = presets[event.characters[index].name].costumeDye;
+				event.characters[index].unk35 = presets[event.characters[index].name].costumeDye;
             }
         }
         return true;
