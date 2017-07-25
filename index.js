@@ -114,6 +114,20 @@ function presetSave() {
 				id: 7777008,
 			});}, 1000);
 		}
+		//ragnarok fix
+		if(event.id == 10155130){
+			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
+		}
+	});
+	
+	//ragnarok fix
+	dispatch.hook('sAbnormalityEnd', 1, (event) =>{
+		if(event.target.low != cid.low || event.target.high != cid.high || event.target.unsigned != cid.unsigned){
+			return;
+		}
+		if(event.id == 10155130){
+			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
+		}
 	});
 	
 	 // disable Marrow Brooch apearance change - Credits Kourinn
