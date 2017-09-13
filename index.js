@@ -226,6 +226,38 @@ function taggedSave() {
 			}
 			return false;
 		}
+		if(event.message.includes("manual1")){
+			var str = event.message;
+			str = str.replace("<FONT>", "");
+			str = str.replace("</FONT>", "");
+			str = str.split(" ");
+			if(str[1] == "weapon"){
+				external.weaponSkin = str[2];
+			}
+			if(str[1] == "costume"){
+				external.costume = str[2];
+			}
+			if(str[1] == "back"){
+				external.back = str[2];
+			}
+			if(str[1] == "mask"){
+				external.mask = str[2];
+			}
+			if(str[1] == "hair"){
+				external.hairAdornment = str[2];
+			}
+			if(str[1] == "innerwear"){
+				external.innerwear = str[2];
+			}
+			
+			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
+			if(tagged[player]){
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+			}
+			presets[player] = external;
+			presetUpdate();
+			return false;
+		}
 		if(event.message.includes("dye1")){
 			dispatch.toClient('S_REQUEST_CONTRACT', 1, {
 				senderId: cid,
