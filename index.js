@@ -50,6 +50,32 @@ function presetSave() {
 
 ////////////////////////////////////////
 
+let tagged = {};
+let taggedTimeout = null;
+let taggedLock = false;	
+
+try { tagged = require('./tags.json'); }
+catch(e) { tagged = {}; }
+
+function taggedUpdate() {
+	clearTimeout(taggedTimeout);
+	taggedTimeout = setTimeout(taggedSave, 1000);
+}
+
+function taggedSave() {
+	if(taggedLock) {
+		taggedUpdate();
+		return;
+	}
+
+	taggedLock = true;
+	fs.writeFile(path.join(__dirname, 'tags.json'), JSON.stringify(tagged), err => {
+		taggedLock = false;
+	});
+}
+
+////////////////////////////////////////
+
 	dispatch.hook('S_LOGIN', 1, event => {
 		({cid} = event)
 		player = event.name;
@@ -82,6 +108,9 @@ function presetSave() {
 				userDefaultAppearance = Object.assign({}, event);
 		if(presets[player] && presets[player].id != 0){
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
+			if(tagged[player]){
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+			}
 			presets[player] = external;
 			presetUpdate();
 			if(external.enable == 0){
@@ -117,6 +146,9 @@ function presetSave() {
 		//ragnarok fix
 		if(event.id == 10155130){
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
+			if(tagged[player]){
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+			}
 		}
 	});
 	
@@ -127,6 +159,9 @@ function presetSave() {
 		}
 		if(event.id == 10155130){
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
+			if(tagged[player]){
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+			}
 		}
 	});
 	
@@ -148,6 +183,9 @@ function presetSave() {
 			var color = Number('0x'+z_hex+r_hex+g_hex+b_hex);
 			external.costumeDye = color;
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
+			if(tagged[player]){
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+			}
 			presets[player] = external;
 			presetUpdate();
 			return false;
@@ -159,8 +197,23 @@ function presetSave() {
 			str = str.split(" ");
 			external.weaponEnchant = str[1];
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
+			if(tagged[player]){
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+			}
 			presets[player] = external;
 			presetUpdate();
+			return false;
+		}
+		if(event.message.includes("tag1")){
+			var str = event.message;
+			str = str.replace("<FONT>", "");
+			str = str.replace("</FONT>", "");
+			str = str.split(" ");
+			tagged[player] = str[1];
+			if(tagged[player]){
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+			}
+			taggedUpdate();
 			return false;
 		}
 		if(event.message.includes("undye1")){
@@ -168,6 +221,9 @@ function presetSave() {
 			presets[player] = external;
 			presetUpdate();
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
+			if(tagged[player]){
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+			}
 			return false;
 		}
 		if(event.message.includes("dye1")){
@@ -220,6 +276,9 @@ function presetSave() {
 		}
 		if(event.message.includes("reset1")){
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, userDefaultAppearance);
+			tagged[player] = "";
+			taggedUpdate();
+			dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
 			external = Object.assign({}, userDefaultAppearance);
 			presets[player].id = 0;
 			presetUpdate();
@@ -256,6 +315,9 @@ function presetSave() {
 		if(inDye){
 			inDye = false;
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
+			if(tagged[player]){
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+			}
 			presets[player] = external;
 			presetUpdate();
 		}
@@ -267,6 +329,9 @@ function presetSave() {
 			process.nextTick(() => { dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external) })
 			presets[player] = external;
 			presetUpdate();
+			if(tagged[player]){
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+			}
 		}
 	})
 
