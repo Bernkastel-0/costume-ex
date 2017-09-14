@@ -109,7 +109,7 @@ function taggedSave() {
 		if(presets[player] && presets[player].id != 0){
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
 			if(tagged[player]){
-				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: [{item: external.costume, text: tagged[player]}]});
 			}
 			presets[player] = external;
 			presetUpdate();
@@ -147,7 +147,7 @@ function taggedSave() {
 		if(event.id == 10155130){
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
 			if(tagged[player]){
-				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: [{item: external.costume, text: tagged[player]}]});
 			}
 		}
 	});
@@ -160,7 +160,7 @@ function taggedSave() {
 		if(event.id == 10155130){
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
 			if(tagged[player]){
-				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: [{item: external.costume, text: tagged[player]}]});
 			}
 		}
 	});
@@ -184,7 +184,7 @@ function taggedSave() {
 			external.costumeDye = color;
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
 			if(tagged[player]){
-				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: [{item: external.costume, text: tagged[player]}]});
 			}
 			presets[player] = external;
 			presetUpdate();
@@ -198,7 +198,7 @@ function taggedSave() {
 			external.weaponEnchant = str[1];
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
 			if(tagged[player]){
-				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: [{item: external.costume, text: tagged[player]}]});
 			}
 			presets[player] = external;
 			presetUpdate();
@@ -211,7 +211,7 @@ function taggedSave() {
 			str = str.split(" ");
 			tagged[player] = str[1];
 			if(tagged[player]){
-				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: [{item: external.costume, text: tagged[player]}]});
 			}
 			taggedUpdate();
 			return false;
@@ -222,7 +222,7 @@ function taggedSave() {
 			presetUpdate();
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
 			if(tagged[player]){
-				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: [{item: external.costume, text: tagged[player]}]});
 			}
 			return false;
 		}
@@ -252,7 +252,7 @@ function taggedSave() {
 			
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
 			if(tagged[player]){
-				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: [{item: external.costume, text: tagged[player]}]});
 			}
 			presets[player] = external;
 			presetUpdate();
@@ -310,7 +310,7 @@ function taggedSave() {
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, userDefaultAppearance);
 			tagged[player] = "";
 			taggedUpdate();
-			dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+			dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: [{item: external.costume, text: tagged[player]}]});
 			external = Object.assign({}, userDefaultAppearance);
 			presets[player].id = 0;
 			presetUpdate();
@@ -348,7 +348,7 @@ function taggedSave() {
 			inDye = false;
 			dispatch.toClient('S_USER_EXTERNAL_CHANGE', 1, external);
 			if(tagged[player]){
-				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: [{item: external.costume, text: tagged[player]}]});
 			}
 			presets[player] = external;
 			presetUpdate();
@@ -362,7 +362,7 @@ function taggedSave() {
 			presets[player] = external;
 			presetUpdate();
 			if(tagged[player]){
-				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: {item: external.costume, text: tagged[player]}});
+				dispatch.toClient('S_ITEM_CUSTOM_STRING', 1, {owner: cid, items: [{item: external.costume, text: tagged[player]}]});
 			}
 		}
 	})
