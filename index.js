@@ -339,7 +339,7 @@ function taggedSave() {
 						item
 					})
 
-			dispatch.toClient('S_REQUEST_INGAMESTORE_MARK_PRODUCTLIST', 1, {items})
+			dispatch.toClient('S_REQUEST_INGAMESTORE_PRODUCT_DETAIL', 1, {items})
 		}
 	})
 	
@@ -367,7 +367,7 @@ function taggedSave() {
 		}
 	})
 
-	dispatch.hook('S_REQUEST_INGAMESTORE_MARK_PRODUCTLIST', 1, function(){return false;})
+	dispatch.hook('S_REQUEST_INGAMESTORE_PRODUCT_DETAIL', 1, function(){return false;})
 
 	dispatch.hook('C_REQUEST_NONDB_ITEM_INFO', 1, event => {
 		if(inDressup) {
